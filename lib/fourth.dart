@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_app/fake_api_service.dart';
 
-// Create Future Provider
-final fakeApiProvider = Provider((_) => FakeService());
-
+/// Create a Future Provider
 final greetingFutureProvider = FutureProvider((Ref ref) async {
   final service = ref.read(fakeApiProvider);
   return await service.fetchGreeting();
 });
 
-// UI Screen to display Future data
+/// UI Screen to display Future data
 class GreetingScreen extends ConsumerWidget {
   const GreetingScreen({super.key});
 
@@ -22,12 +20,12 @@ class GreetingScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Async Greeting')),
       body: Center(
-        // Load data
+        /// Load data
         child: greetingAsync.when(
           skipLoadingOnRefresh: false,
           data: (greeting) =>
-              Text(greeting, style: const TextStyle(fontSize: 30)),
-          error: (error, stackTrace) => Column(
+              Text(greeting, style: const TextStyle(fontSize: 24)),
+          error: (error, _) => Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('Error: $error', style: const TextStyle(color: Colors.red)),
