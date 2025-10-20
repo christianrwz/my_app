@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_app/fake_stream_servicee.dart';
+import 'package:my_app/fake_stream_service.dart';
 
 final tickerProvider = StreamProvider((Ref ref) {
   final service = ref.read(timerServiceProvider);

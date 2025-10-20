@@ -1,10 +1,8 @@
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:my_app/todo/todo_model.dart';
+import 'package:my_app/state_notifier_provider_todo/todo_model.dart';
 
 final todolistProvider =
-    StateNotifierProvider.autoDispose<TodoListNotifier, List<Todo>>((ref) {
-      return TodoListNotifier([]);
-    });
+    StateNotifierProvider<TodoListNotifier, List<Todo>>((ref) => TodoListNotifier([]));
 
 class TodoListNotifier extends StateNotifier<List<Todo>> {
   TodoListNotifier(super.state);

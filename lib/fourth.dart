@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_app/fake_api_service.dart';
 
+/// Create a FakeService Instance
+final fakeApiProvider = Provider((_) => FakeService());
+
 /// Create a Future Provider
 final greetingFutureProvider = FutureProvider((Ref ref) async {
   final service = ref.read(fakeApiProvider);
@@ -23,8 +26,8 @@ class GreetingScreen extends ConsumerWidget {
         /// Load data
         child: greetingAsync.when(
           skipLoadingOnRefresh: false,
-          data: (greeting) =>
-              Text(greeting, style: const TextStyle(fontSize: 24)),
+          data: (greeting) => Text(greeting, style: TextStyle(fontSize: 24)),
+          loading: () => CircularProgressIndicator(),
           error: (error, _) => Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -36,7 +39,6 @@ class GreetingScreen extends ConsumerWidget {
               ),
             ],
           ),
-          loading: () => CircularProgressIndicator(),
         ),
       ),
     );
