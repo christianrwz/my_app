@@ -13,7 +13,7 @@ class GreetingAsyncNotifier extends AsyncNotifier<String> {
   }
 
   Future<void> refreshGreeting() async {
-
+    // state = const AsyncValue.loading();
     // state = await AsyncValue.guard(() async => await ref.read(fakeApiProvider).fetchGreeting());
 
     try {
