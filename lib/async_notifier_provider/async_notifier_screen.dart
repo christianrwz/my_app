@@ -15,7 +15,6 @@ class AsyncGreetingScreen extends ConsumerWidget {
       body: Center(
         child: greetingAsync.when(
           skipLoadingOnRefresh: false,
-          data: (greeting) => Text(greeting, style: TextStyle(fontSize: 24)),
           loading: () => CircularProgressIndicator(),
           error: (error, _) => Column(
             mainAxisSize: MainAxisSize.min,
@@ -23,10 +22,11 @@ class AsyncGreetingScreen extends ConsumerWidget {
               Text('Error: $error', style: TextStyle(color: Colors.red)),
             ],
           ),
+          data: (greeting) => Text(greeting, style: TextStyle(fontSize: 24)),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => greetingAsyncNotifier.refreshGreeting(),
+        onPressed: greetingAsyncNotifier.refreshGreeting,
         child: const Icon(Icons.refresh),
       ),
     );

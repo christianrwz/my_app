@@ -26,7 +26,6 @@ class GreetingScreen extends ConsumerWidget {
         /// Load data
         child: greetingAsync.when(
           skipLoadingOnRefresh: false,
-          data: (greeting) => Text(greeting, style: TextStyle(fontSize: 24)),
           loading: () => CircularProgressIndicator(),
           error: (error, _) => Column(
             mainAxisSize: MainAxisSize.min,
@@ -39,6 +38,7 @@ class GreetingScreen extends ConsumerWidget {
               ),
             ],
           ),
+          data: (greeting) => Text(greeting, style: TextStyle(fontSize: 24)),
         ),
       ),
     );

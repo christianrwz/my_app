@@ -8,7 +8,7 @@ final greetingAsyncProvider = AsyncNotifierProvider<GreetingAsyncNotifier, Strin
 
 class GreetingAsyncNotifier extends AsyncNotifier<String> {
   @override
-  FutureOr<String> build() {
+  Future<String> build() {
     return ref.read(fakeApiProvider).fetchGreeting();
   }
 
