@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_app/extensions.dart';
 import 'package:my_app/services.dart';
 
 void main() {
@@ -29,11 +30,25 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
+  final _emailFieldKey = GlobalKey<FormFieldState>();
+  final _passwordFieldKey = GlobalKey<FormFieldState>();
+  final _phoneFieldKey = GlobalKey<FormFieldState>();
+  final _addressFieldKey = GlobalKey<FormFieldState>();
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _phoneController = TextEditingController();
-  final _addressController =
-      TextEditingController(); // Address field controller
+  final _addressController = TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _emailController.dispose();
+    _passwordController.dispose();
+    _phoneController.dispose();
+    _addressController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,74 +57,67 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Email Field (Required)
           CustomFormField(
             label: 'Email',
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
-            formKey: _formKey, // Pass the formKey
             validator: (value) {
               if (value == null || value.isEmpty || !value.isValidEmail) {
                 return 'Please enter a valid email';
               }
               return null;
             },
+            fieldKey: _emailFieldKey,
+            validateOnChange: true, // ✅ live validate
           ),
           SizedBox(height: 16),
-
-          // Password Field (Required)
           CustomFormField(
             label: 'Password',
             controller: _passwordController,
             obscureText: true,
-            formKey: _formKey, // Pass the formKey
             validator: (value) {
               if (value == null || value.isEmpty || !value.isValidPassword) {
-                return 'Password must contain an uppercase letter, lowercase letter, number, and special character';
+                return 'Password must be at least 8 characters';
               }
               return null;
             },
+            fieldKey: _passwordFieldKey,
+            validateOnChange: true, // ✅ live validate
           ),
           SizedBox(height: 16),
-
-          // Phone Number Field (Required)
           CustomFormField(
             label: 'Mobile Number',
+            hintText: '09123456789',
             controller: _phoneController,
             keyboardType: TextInputType.number,
             inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly, // Only allow digits
-              PhoneNumberFormatter(), // Apply the custom formatter
+              FilteringTextInputFormatter.digitsOnly,
+              // PhoneNumberFormatter(),
+              LengthLimitingTextInputFormatter(11),
             ],
-            autoFormatOnChange: true,
-            formKey: _formKey, // Pass the formKey
             validator: (value) {
               if (value == null || value.length != 11) {
-                return 'Please enter a valid mobile number (e.g., 09171234567)';
+                return 'Please enter a valid mobile number';
               }
               return null;
             },
+            fieldKey: _phoneFieldKey,
+            validateOnChange: true, // ✅ live validate
           ),
           SizedBox(height: 16),
-
-          // Address Field (Optional)
           CustomFormField(
             label: 'Address',
             controller: _addressController,
-            isRequired: false, // This field is optional
-            formKey: _formKey, // Pass the formKey
-            validator: (value) {
-              // Optional field doesn't require validation
-              return null;
-            },
+            isRequired: false,
+            fieldKey: _addressFieldKey,
           ),
+
           SizedBox(height: 16),
 
           ElevatedButton(
             onPressed: () {
               if (_formKey.currentState?.validate() ?? false) {
                 // Proceed with the form submission
-                print("Form is valid! Submitting...");
                 print("Email: ${_emailController.text}");
                 print("Password: ${_passwordController.text}");
                 print("Phone Number: ${_phoneController.text}");
