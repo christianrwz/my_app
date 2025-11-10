@@ -15,19 +15,19 @@ class CompareSelectScreen extends ConsumerWidget {
       body: Row(
         children: [
           // left
-          Expanded(
-            child: Column(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('Wothout select [bad]'),
-                ),
-                Expanded(child: TodoListWithoutSelect()),
-              ],
-            ),
-          ),
+          // Expanded(
+          //   child: Column(
+          //     children: [
+          //       const Padding(
+          //         padding: EdgeInsets.all(8.0),
+          //         child: Text('Wothout select [bad]'),
+          //       ),
+          //       Expanded(child: TodoListWithoutSelect()),
+          //     ],
+          //   ),
+          // ),
 
-          VerticalDivider(),
+          // VerticalDivider(),
 
           // right
           Expanded(
